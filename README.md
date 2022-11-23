@@ -30,8 +30,8 @@ volumes:
  backup_vol2:
 
 Развертывание docker-compose  и запуск в нутри него bash
-
 vagrant@vagrant:~/docker/volumes/postgres$ sudo docker-compose up -d
+
 vagrant@vagrant:~/docker/volumes/postgres$ sudo docker exec -it pg12 bash
 root@a43834a670f0:/#
 
