@@ -101,9 +101,12 @@ GRANT
 test_db=#
 
 Итоговый список БД
+
 ![Задание 2 итоговый список БД](https://user-images.githubusercontent.com/109212419/204089546-354fae66-eed4-466f-a23f-508037116482.jpg)
 
+
 Описание таблиц
+
 ![Задание 2 таблица orders](https://user-images.githubusercontent.com/109212419/204089586-e60825c9-0e1c-4a65-a2b1-3c45c052bab7.jpg)
 ![Задание 2 таблица clients](https://user-images.githubusercontent.com/109212419/204089592-2d6ac019-c7ec-4ee6-b59f-9ad3ecf4f125.jpg)
 
@@ -111,6 +114,8 @@ test_db=#
 Список пользователей с правами над таблицами
 
 test_db=# SELECT grantee, table_catalog, table_name, privilege_type FROM information_schema.table_privileges WHERE table_name IN ('orders','clients');
+
+
 ![Задание 2 Список пользователей с правами над таблицами](https://user-images.githubusercontent.com/109212419/204089514-9e2ff2e9-a6b9-4b72-a442-e865236a587a.jpg)
 
 
