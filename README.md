@@ -119,6 +119,88 @@ test_db=# SELECT grantee, table_catalog, table_name, privilege_type FROM informa
 ![Задание 2 Список пользователей с правами над таблицами](https://user-images.githubusercontent.com/109212419/204089514-9e2ff2e9-a6b9-4b72-a442-e865236a587a.jpg)
 
 
+Задание 3
+
+Наполнение таблиц данными
+
+test_db=# INSERT INTO orders VALUES (1, 'Шоколад', 10), (2, 'Принтер', 3000), (3, 'Книга', 500), (4, 'Монитор', 7000), (5, 'Гитара', 4000);
+
+INSERT 0 5
+
+test_db=# INSERT INTO clients VALUES (1, 'Иванов Иван Иванович', 'USA'), (2, 'Петров Петр Петрович', 'Canada'), (3, 'Иоганн Себастьян Бах', 'Japan'), (4, 'Ронни Джеймс Дио', 'Russia'), (5, 'Ritchie Blackmore', 'Russia');
+
+INSERT 0 5
+
+
+test_db=#
+
+SQL запросы для вычисления количества записей в таблицах
+
+![Задание 3 результат кол-во записей в таблицах ](https://user-images.githubusercontent.com/109212419/204155271-e855f4c7-aae8-4482-b5c6-651efd67c622.jpg)
+
+ЗАДАНИЕ 4
+
+Связь записей в таблицах
+
+test_db=#  UPDATE clients SET заказ=(select id from orders where наименование='Книга') WHERE фамилия='Иванов Иван Иванович';
+
+UPDATE 1
+
+test_db=# UPDATE clients SET заказ=(select id from orders where наименование='Монитор') WHERE фамилия='Петров Петр Петрович';
+
+UPDATE 1
+
+test_db=# UPDATE clients SET заказ=(select id from orders where наименование='Гитара') WHERE фамилия='Иоганн Себастьян Бах';
+
+UPDATE 1
+
+Запрос для выдачи всех пользователей которые совершили заказ
+
+test_db=# SELECT* FROM clients WHERE заказ IS NOT NULL;
+
+![Задание 4 все кто сделал заказ](https://user-images.githubusercontent.com/109212419/204155721-ae97b7ae-780f-4cba-abc0-141fdf73ebe9.jpg)
+
+ЗАДАНИЕ 5
+
+![Задание 5 explain](https://user-images.githubusercontent.com/109212419/204155835-62cb6986-f481-4246-9a04-9505efe1ee49.jpg)
+
+Чтение данных из таблицы clients происходит с использованием метода Seq Scan — последовательного чтения данных. Значение 0.00 — ожидаемые затраты на получение первой строки. Второе — 18.10 — ожидаемые затраты на получение всех строк. rows - ожидаемое число строк, которое должен вывести этот узел плана. При этом так же предполагается, что узел выполняется до конца. width - ожидаемый средний размер строк, выводимых этим узлом плана (в байтах). Каждая запись сравнивается с условием "заказ" IS NOT NULL. Если условие выполняется, запись вводится в результат. Иначе — отбрасывается.
+
+ЗАДАНИЕ 6
+
+Создание бэкапа БД test_db и сохранение его в volume, предназначенный для бэкапов
+
+root@a43834a670f0:/# pg_dump -U amolokov test_db > /home/backup/test_db.backup |echo $?
+0
+
+root@a43834a670f0:/#
+
+Остановка контейнера с PostgreSQL (без удаления volumes).
+
+![Задание 6 остановка контейнера pg12](https://user-images.githubusercontent.com/109212419/204156329-c32eab3b-8ff1-4415-9811-7eefbc593f48.jpg)
+
+
+Запуск нового пустого контейнера с PostgreSQL.
+
+vagrant@vagrant:~/docker/volumes/postgres$ sudo docker run --name new_pg12 -e POSTGRES_PASSWORD=123456 -d postgres:12
+
+![Задание 6 создание и запуск нового контейнера](https://user-images.githubusercontent.com/109212419/204156520-4b348a7a-93ab-4398-bc4c-9fde73b0644f.jpg)
+
+
+Восстановление БД test_db в новом контейнере new_pg12.
+
+Копирование файла из контейнера pg12 в new_pg12
+
+![Задание 6 оибка при копировании данных](https://user-images.githubusercontent.com/109212419/204158844-38b19e84-16d9-407b-9630-d2cd982dce28.jpg)
+
+Пока разбираюсь
+
+
+
+
+
+
+
 
 
 
